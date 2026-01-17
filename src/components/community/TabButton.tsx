@@ -19,8 +19,8 @@ export function TabButton({ label, isActive, onClick }: TabButtonProps) {
       className={cn(
         "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
         isActive 
-          ? "bg-tab-active text-white" 
-          : "bg-transparent text-foreground hover:bg-muted"
+          ? "bg-primary text-primary-foreground" 
+          : "bg-muted text-muted-foreground hover:text-foreground"
       )}
     >
       {label}

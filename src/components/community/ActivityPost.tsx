@@ -35,7 +35,7 @@ export function ActivityPost({
   onComment,
 }: ActivityPostProps) {
   return (
-    <div className="activity-card p-4 animate-fade-in">
+    <div className="stat-card animate-fade-in">
       {/* Header */}
       <div className="flex items-center gap-3 mb-4">
         <Avatar initials={userInitials} size="lg" />
