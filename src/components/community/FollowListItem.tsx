@@ -37,7 +37,7 @@ export function FollowListItem({
       
       <button
         onClick={onButtonClick}
-        className="px-5 py-2 bg-secondary text-secondary-foreground text-sm font-medium rounded-lg hover:opacity-90 transition-opacity"
+        className="px-5 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors"
       >
         {buttonLabel}
       </button>

@@ -1,14 +1,6 @@
 /**
- * CommunityScreen Component
- * Main community feed page with two tabs: Overview and My Friends
- * 
- * Structure:
- * - Header with title and search icon
- * - Tab navigation (Overview / My Friends)
- * - Story input (Overview only)
- * - Suggestion cards (horizontal scroll)
- * - Activity feed or Follow lists
- * - Bottom navigation with FAB
+ * CommunityScreen Component (Updated for dark theme)
+ * Main community feed with Overview and My Friends tabs
  */
 
 import { useState } from "react";
@@ -18,12 +10,10 @@ import { StoryInput } from "@/components/community/StoryInput";
 import { SuggestionCard } from "@/components/community/SuggestionCard";
 import { ActivityPost } from "@/components/community/ActivityPost";
 import { FollowListItem } from "@/components/community/FollowListItem";
-import { BottomNavigation } from "@/components/community/BottomNavigation";
 
 type Tab = "overview" | "friends";
-type NavItem = "overview" | "community" | "challenge" | "profile";
 
-// Mock data - replace with real data later
+// Mock data
 const suggestions = [
   { id: 1, initials: "V", username: "viCVtG2dpUHL..." },
   { id: 2, initials: "C", username: "CzVBkknDbBR..." },
@@ -63,24 +53,22 @@ const followingList = [
   { id: 2, initials: "CG", userName: "Charlotte Gammelgaard", buttonLabel: "Follow" as const },
   { id: 3, initials: "CG", userName: "Christian Gadegaard", buttonLabel: "Follow" as const },
   { id: 4, initials: "CD", userName: "Carsten Dyberg", buttonLabel: "Follow" as const },
-  { id: 5, initials: "CG", userName: "Christian Gosvig", buttonLabel: "Follow" as const },
 ];
 
 export function CommunityScreen() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
-  const [activeNav, setActiveNav] = useState<NavItem>("community");
 
   return (
     <div className="min-h-screen bg-background pb-24">
       {/* Header */}
-      <header className="sticky top-0 bg-background z-40 px-4 pt-6 pb-4">
+      <header className="sticky top-0 bg-background/95 backdrop-blur-sm z-40 px-4 pt-6 pb-4">
         <div className="flex items-center justify-between mb-4">
-          <h1 className="text-3xl font-brand text-secondary">Community</h1>
+          <h1 className="text-3xl font-brand text-primary">Community</h1>
           <button 
             className="p-2 hover:bg-muted rounded-full transition-colors"
             aria-label="Search"
           >
-            <Search className="w-6 h-6 text-secondary" />
+            <Search className="w-6 h-6 text-primary" />
           </button>
         </div>
         
@@ -106,13 +94,6 @@ export function CommunityScreen() {
           <FriendsTab />
         )}
       </main>
-      
-      {/* Bottom Navigation */}
-      <BottomNavigation 
-        activeItem={activeNav}
-        onNavigate={setActiveNav}
-        onFabClick={() => console.log("Create new post")}
-      />
     </div>
   );
 }
@@ -143,7 +124,7 @@ function OverviewTab() {
               username={suggestion.username}
               buttonLabel="Follow"
               className="animate-slide-in-right"
-              style={{ animationDelay: `${index * 100}ms` } as React.CSSProperties}
+              style={{ animationDelay: `${index * 100}ms` }}
             />
           ))}
         </div>
@@ -187,7 +168,7 @@ function FriendsTab() {
               username={suggestion.username}
               buttonLabel="Request"
               className="animate-slide-in-right"
-              style={{ animationDelay: `${index * 100}ms` } as React.CSSProperties}
+              style={{ animationDelay: `${index * 100}ms` }}
             />
           ))}
         </div>

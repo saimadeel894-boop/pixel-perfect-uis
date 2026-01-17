@@ -31,7 +31,7 @@ export function Avatar({
   return (
     <div
       className={cn(
-        "rounded-full flex items-center justify-center font-semibold bg-secondary text-secondary-foreground overflow-hidden flex-shrink-0",
+        "rounded-full flex items-center justify-center font-semibold bg-primary/20 text-primary overflow-hidden flex-shrink-0",
         sizeClasses[size],
         showRing && "ring-2 ring-primary ring-offset-2 ring-offset-background",
         className
