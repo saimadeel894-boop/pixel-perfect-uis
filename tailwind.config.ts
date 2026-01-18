@@ -85,6 +85,7 @@ export default {
         card: "var(--shadow-card)",
         fab: "var(--shadow-fab)",
         glow: "var(--shadow-glow)",
+        highlight: "var(--shadow-highlight)",
       },
       keyframes: {
         "accordion-down": {

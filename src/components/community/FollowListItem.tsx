@@ -25,19 +25,24 @@ export function FollowListItem({
   className,
 }: FollowListItemProps) {
   return (
-    <div className={cn("flex items-center justify-between py-3", className)}>
-      <div className="flex items-center gap-3">
+    <div className={cn(
+      "flex items-center justify-between py-3.5 px-4",
+      className
+    )}>
+      <div className="flex items-center gap-3 min-w-0 flex-1">
         <Avatar 
           src={avatarSrc} 
           initials={initials} 
           size="lg" 
         />
-        <span className="font-medium text-foreground">{userName}</span>
+        <span className="font-medium text-foreground text-sm truncate">
+          {userName}
+        </span>
       </div>
       
       <button
         onClick={onButtonClick}
-        className="px-5 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors"
+        className="px-4 py-2 bg-primary text-primary-foreground text-xs font-semibold rounded-lg hover:bg-primary/90 active:scale-95 transition-all duration-150 ml-3 flex-shrink-0"
       >
         {buttonLabel}
       </button>

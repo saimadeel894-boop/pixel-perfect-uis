@@ -26,14 +26,14 @@ export function StoryInput({
       
       <button 
         onClick={onInputClick}
-        className="flex-1 text-left text-muted-foreground text-sm"
+        className="flex-1 text-left text-muted-foreground text-sm hover:text-foreground transition-colors"
       >
         {placeholder}
       </button>
       
       <button 
         onClick={onCameraClick}
-        className="p-2 hover:bg-muted rounded-full transition-colors"
+        className="p-2.5 hover:bg-muted rounded-full transition-colors active:scale-95"
         aria-label="Add photo"
       >
         <Camera className="w-5 h-5 text-muted-foreground" />
