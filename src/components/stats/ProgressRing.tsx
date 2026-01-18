@@ -1,6 +1,7 @@
 /**
  * ProgressRing Component
  * Circular progress indicator for goals
+ * Matches Figma with smooth gradient and clean typography
  */
 
 import { cn } from "@/lib/utils";
@@ -15,9 +16,9 @@ interface ProgressRingProps {
 }
 
 const sizes = {
-  sm: { size: 60, stroke: 4 },
-  md: { size: 80, stroke: 6 },
-  lg: { size: 120, stroke: 8 },
+  sm: { size: 56, stroke: 5, fontSize: "text-xs" },
+  md: { size: 72, stroke: 6, fontSize: "text-sm" },
+  lg: { size: 100, stroke: 8, fontSize: "text-lg" },
 };
 
 export function ProgressRing({
@@ -28,7 +29,7 @@ export function ProgressRing({
   showValue = true,
   className,
 }: ProgressRingProps) {
-  const { size: diameter, stroke } = sizes[size];
+  const { size: diameter, stroke, fontSize } = sizes[size];
   const radius = (diameter - stroke) / 2;
   const circumference = radius * 2 * Math.PI;
   const percent = Math.min((value / max) * 100, 100);
@@ -52,7 +53,7 @@ export function ProgressRing({
             strokeWidth={stroke}
           />
           
-          {/* Progress circle */}
+          {/* Progress circle with gradient effect */}
           <circle
             cx={diameter / 2}
             cy={diameter / 2}
@@ -63,7 +64,10 @@ export function ProgressRing({
             strokeLinecap="round"
             strokeDasharray={circumference}
             strokeDashoffset={offset}
-            className="transition-all duration-500"
+            className="transition-all duration-700 ease-out"
+            style={{
+              filter: "drop-shadow(0 0 4px hsl(var(--primary) / 0.4))"
+            }}
           />
         </svg>
         
@@ -71,9 +75,7 @@ export function ProgressRing({
           <div className="absolute inset-0 flex items-center justify-center">
             <span className={cn(
               "font-bold text-foreground",
-              size === "sm" && "text-xs",
-              size === "md" && "text-sm",
-              size === "lg" && "text-xl"
+              fontSize
             )}>
               {Math.round(percent)}%
             </span>
@@ -82,7 +84,7 @@ export function ProgressRing({
       </div>
       
       {label && (
-        <span className="text-xs text-muted-foreground text-center">
+        <span className="text-[11px] text-muted-foreground text-center font-medium">
           {label}
         </span>
       )}

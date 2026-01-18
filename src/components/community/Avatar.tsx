@@ -1,7 +1,7 @@
 /**
  * Avatar Component
  * Displays user avatar with optional initials fallback
- * Used throughout the community feed and suggestion cards
+ * Consistent sizing and styling across the app
  */
 
 import { cn } from "@/lib/utils";
@@ -15,10 +15,10 @@ interface AvatarProps {
 }
 
 const sizeClasses = {
-  sm: "w-8 h-8 text-xs",
-  md: "w-10 h-10 text-sm",
-  lg: "w-12 h-12 text-base",
-  xl: "w-16 h-16 text-lg",
+  sm: "w-8 h-8 text-[10px]",
+  md: "w-10 h-10 text-xs",
+  lg: "w-12 h-12 text-sm",
+  xl: "w-16 h-16 text-base",
 };
 
 export function Avatar({ 
@@ -31,7 +31,8 @@ export function Avatar({
   return (
     <div
       className={cn(
-        "rounded-full flex items-center justify-center font-semibold bg-primary/20 text-primary overflow-hidden flex-shrink-0",
+        "rounded-full flex items-center justify-center font-semibold overflow-hidden flex-shrink-0",
+        "bg-gradient-to-br from-primary/30 to-primary/20 text-primary",
         sizeClasses[size],
         showRing && "ring-2 ring-primary ring-offset-2 ring-offset-background",
         className
@@ -44,7 +45,7 @@ export function Avatar({
           className="w-full h-full object-cover"
         />
       ) : (
-        <span>{initials || "?"}</span>
+        <span className="font-semibold">{initials || "?"}</span>
       )}
     </div>
   );

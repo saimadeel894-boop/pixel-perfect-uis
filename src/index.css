@@ -12,8 +12,9 @@
 
 @layer base {
   :root {
-    /* Brand Colors - from Figma */
+    /* Brand Colors - from Figma Color Guide */
     --coral: 18 100% 65%;           /* #FF814B - Primary orange */
+    --coral-dark: 18 100% 55%;      /* Darker coral for hover */
     --glaucous: 228 57% 63%;        /* #6B7FD7 - Blue accent */
     --non-photo-blue: 193 80% 85%;  /* #BCEDF6 - Light blue */
     --nyanza: 122 88% 90%;          /* #D0FBD2 - Light green */
@@ -23,23 +24,23 @@
     /* Dark Theme - Primary */
     --background: 0 0% 7%;          /* Very dark background #121212 */
     --background-elevated: 0 0% 10%; /* Elevated surfaces */
-    --background-card: 0 0% 13%;    /* Card background */
-    --foreground: 0 0% 95%;         /* Light text */
+    --background-card: 0 0% 12%;    /* Card background - slightly lighter */
+    --foreground: 0 0% 96%;         /* Light text - brighter */
     
-    --card: 0 0% 13%;
-    --card-foreground: 0 0% 95%;
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 96%;
     
-    --popover: 0 0% 13%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 96%;
     
-    --primary: 18 100% 65%;         /* Coral orange */
+    --primary: 18 100% 65%;         /* Coral orange #FF814B */
     --primary-foreground: 0 0% 100%;
     
-    --secondary: 0 0% 20%;          /* Dark gray */
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 0 0% 18%;          /* Dark gray */
+    --secondary-foreground: 0 0% 96%;
     
-    --muted: 0 0% 18%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 0 0% 16%;
+    --muted-foreground: 0 0% 55%;
     
     --accent: 18 100% 65%;          /* Coral */
     --accent-foreground: 0 0% 100%;
@@ -53,15 +54,15 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
     
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
     --ring: 18 100% 65%;
     
-    --radius: 0.75rem;
+    --radius: 0.875rem;
     
     /* Chart colors */
     --chart-primary: 18 100% 65%;
-    --chart-secondary: 18 100% 45%;
+    --chart-secondary: 18 100% 50%;
     --chart-tertiary: 18 100% 75%;
     
     /* FAB menu */
@@ -70,16 +71,17 @@
     
     /* Navigation */
     --nav-active: 18 100% 65%;
-    --nav-inactive: 0 0% 50%;
+    --nav-inactive: 0 0% 45%;
     
     /* Tab styles */
     --tab-active-bg: 18 100% 65%;
-    --tab-inactive-bg: 0 0% 20%;
+    --tab-inactive-bg: 0 0% 18%;
     
-    /* Shadows for dark theme */
-    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
-    --shadow-fab: 0 4px 24px rgba(255, 129, 75, 0.3);
-    --shadow-glow: 0 0 30px rgba(255, 129, 75, 0.2);
+    /* Shadows for dark theme - more pronounced */
+    --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.5);
+    --shadow-fab: 0 6px 28px rgba(255, 129, 75, 0.35);
+    --shadow-glow: 0 0 24px rgba(255, 129, 75, 0.25);
+    --shadow-highlight: inset 0 0 0 1px rgba(255, 129, 75, 0.3);
   }
 }
 
@@ -91,11 +93,13 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
   h1, h2, h3, .font-brand {
     font-family: 'Staatliches', sans-serif;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.03em;
   }
 }
 
@@ -106,16 +110,18 @@
     box-shadow: var(--shadow-card);
   }
   
-  /* Stat card with glow */
+  /* Stat card - base styling */
   .stat-card {
     @apply bg-background-card rounded-2xl p-4;
     border: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow-card);
   }
   
+  /* Stat card with highlight glow */
   .stat-card-highlight {
     @apply bg-background-card rounded-2xl p-4;
-    border: 1px solid hsl(var(--primary) / 0.3);
-    box-shadow: var(--shadow-glow);
+    border: 1px solid hsl(var(--primary) / 0.4);
+    box-shadow: var(--shadow-glow), var(--shadow-highlight);
   }
   
   /* Progress bar */
@@ -124,34 +130,40 @@
   }
   
   .progress-bar-fill {
-    @apply h-full rounded-full bg-primary transition-all duration-500;
+    @apply h-full rounded-full transition-all duration-500 ease-out;
+    background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--primary) / 0.8));
   }
   
   /* Tab button styles */
   .tab-active {
-    @apply bg-primary text-primary-foreground;
+    @apply bg-primary text-primary-foreground font-medium;
+    box-shadow: var(--shadow-fab);
   }
   
   .tab-inactive {
-    @apply bg-muted text-muted-foreground hover:text-foreground;
+    @apply bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80;
   }
   
   /* Suggestion card */
   .suggestion-card {
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary) / 0.8));
+    background: linear-gradient(145deg, hsl(var(--primary)), hsl(var(--primary) / 0.75));
     box-shadow: var(--shadow-fab);
   }
   
   /* Activity card */
   .activity-card {
-    @apply bg-background-card rounded-xl;
+    @apply bg-background-card rounded-2xl;
     box-shadow: var(--shadow-card);
   }
   
   /* FAB button */
   .fab-button {
-    background: hsl(var(--fab-bg));
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--coral-dark)));
     box-shadow: var(--shadow-fab);
+  }
+  
+  .fab-button:active {
+    transform: scale(0.95);
   }
   
   /* FAB menu item */
@@ -166,10 +178,10 @@
     box-shadow: var(--shadow-card);
   }
   
-  /* Chart bar */
+  /* Chart bar - gradient orange */
   .chart-bar {
-    @apply rounded-t-md transition-all duration-300;
-    background: linear-gradient(to top, hsl(var(--primary)), hsl(var(--primary) / 0.6));
+    @apply rounded-md transition-all duration-500 ease-out;
+    background: linear-gradient(to top, hsl(var(--chart-secondary)), hsl(var(--primary)));
   }
   
   /* Category card */
@@ -181,6 +193,11 @@
   .category-card::before {
     content: '';
     @apply absolute inset-0 bg-black/40;
+  }
+
+  /* Section headers */
+  .section-header {
+    @apply text-sm font-brand text-foreground uppercase tracking-wider mb-4;
   }
 }
 
@@ -195,7 +212,11 @@
   }
   
   .safe-bottom {
-    padding-bottom: env(safe-area-inset-bottom, 20px);
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+  }
+  
+  .safe-top {
+    padding-top: env(safe-area-inset-top, 0px);
   }
   
   .text-gradient {
@@ -205,6 +226,11 @@
   
   .bg-glass {
     @apply backdrop-blur-lg;
-    background: hsl(var(--background) / 0.8);
+    background: hsl(var(--background) / 0.85);
+  }
+
+  /* Touch feedback */
+  .touch-feedback {
+    @apply active:scale-95 transition-transform duration-150;
   }
 }

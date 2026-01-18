@@ -1,13 +1,14 @@
 /**
  * OverviewScreen Component
  * Dashboard showing user's fitness statistics - matches Figma design exactly
+ * Features: Stats grid, weekly chart, progress rings, recent activity
  */
 
 import { Flame, Timer, Dumbbell, TrendingUp } from "lucide-react";
 import { WeeklyChart } from "@/components/stats/WeeklyChart";
 import { ProgressRing } from "@/components/stats/ProgressRing";
 
-// Mock data
+// Mock data - Weekly activity values
 const weeklyData = [
   { day: "Mon", value: 45 },
   { day: "Tue", value: 80 },
@@ -20,40 +21,42 @@ const weeklyData = [
 
 export function OverviewScreen() {
   return (
-    <div className="min-h-screen bg-background pb-24">
-      {/* Header - matching Figma */}
-      <header className="px-4 pt-8 pb-6">
-        <p className="text-muted-foreground text-base">Hey,</p>
-        <h1 className="text-4xl font-brand text-primary tracking-wide">Christian</h1>
+    <div className="min-h-screen bg-background pb-28">
+      {/* Header - Greeting with user name */}
+      <header className="px-4 pt-10 pb-6 safe-top">
+        <p className="text-muted-foreground text-base mb-0.5">Hey,</p>
+        <h1 className="text-4xl font-brand text-primary tracking-wide">
+          Christian
+        </h1>
       </header>
 
       <main className="px-4 space-y-4">
-        {/* Main Stats Grid - 2x2 layout matching Figma */}
+        {/* Main Stats Grid - 2x2 layout */}
         <div className="grid grid-cols-2 gap-3">
-          {/* Today's Calories - Highlighted */}
+          {/* Today's Calories - Highlighted card */}
           <div className="stat-card-highlight">
-            <div className="flex items-start justify-between mb-2">
-              <span className="text-xs text-muted-foreground uppercase tracking-wide">
+            <div className="flex items-start justify-between mb-3">
+              <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-medium">
                 Today's Calories
               </span>
               <Flame className="w-4 h-4 text-primary" />
             </div>
-            <div className="flex items-baseline gap-1">
+            <div className="flex items-baseline gap-1.5">
               <span className="text-3xl font-bold text-primary">1,240</span>
               <span className="text-sm text-muted-foreground">kcal</span>
             </div>
-            <div className="text-xs mt-2 text-success">↑ Improving</div>
+            <div className="text-xs mt-2.5 text-success font-medium">↑ Improving</div>
           </div>
 
           {/* Workout Time */}
           <div className="stat-card">
-            <div className="flex items-start justify-between mb-2">
-              <span className="text-xs text-muted-foreground uppercase tracking-wide">
+            <div className="flex items-start justify-between mb-3">
+              <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-medium">
                 Workout Time
               </span>
               <Timer className="w-4 h-4 text-muted-foreground" />
             </div>
-            <div className="flex items-baseline gap-1">
+            <div className="flex items-baseline gap-1.5">
               <span className="text-3xl font-bold text-foreground">48</span>
               <span className="text-sm text-muted-foreground">min</span>
             </div>
@@ -61,28 +64,28 @@ export function OverviewScreen() {
 
           {/* Active Days */}
           <div className="stat-card">
-            <div className="flex items-start justify-between mb-2">
-              <span className="text-xs text-muted-foreground uppercase tracking-wide">
+            <div className="flex items-start justify-between mb-3">
+              <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-medium">
                 Active Days
               </span>
               <Dumbbell className="w-4 h-4 text-muted-foreground" />
             </div>
-            <div className="flex items-baseline gap-1">
+            <div className="flex items-baseline gap-1.5">
               <span className="text-3xl font-bold text-foreground">5</span>
               <span className="text-sm text-muted-foreground">/ 7</span>
             </div>
-            <div className="text-xs mt-2 text-success">↑ Improving</div>
+            <div className="text-xs mt-2.5 text-success font-medium">↑ Improving</div>
           </div>
 
           {/* Total Tonnage */}
           <div className="stat-card">
-            <div className="flex items-start justify-between mb-2">
-              <span className="text-xs text-muted-foreground uppercase tracking-wide">
+            <div className="flex items-start justify-between mb-3">
+              <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-medium">
                 Total Tonnage
               </span>
               <TrendingUp className="w-4 h-4 text-muted-foreground" />
             </div>
-            <div className="flex items-baseline gap-1">
+            <div className="flex items-baseline gap-1.5">
               <span className="text-3xl font-bold text-foreground">2.4</span>
               <span className="text-sm text-muted-foreground">tonnes</span>
             </div>
@@ -95,13 +98,11 @@ export function OverviewScreen() {
           label="Weekly Activity"
         />
 
-        {/* Weekly Goals - Circular Progress */}
+        {/* Weekly Goals - Circular Progress Indicators */}
         <div className="stat-card">
-          <h3 className="text-sm font-medium text-foreground mb-4">
-            Weekly Goals
-          </h3>
+          <h3 className="section-header">Weekly Goals</h3>
           
-          <div className="flex justify-around">
+          <div className="flex justify-around py-2">
             <ProgressRing
               value={5}
               max={7}
@@ -123,13 +124,11 @@ export function OverviewScreen() {
           </div>
         </div>
 
-        {/* Recent Activity */}
+        {/* Recent Activity List */}
         <div className="stat-card">
-          <h3 className="text-sm font-medium text-foreground mb-3">
-            Recent Activity
-          </h3>
+          <h3 className="section-header">Recent Activity</h3>
           
-          <div className="space-y-3">
+          <div className="space-y-1">
             <ActivityItem
               title="Upper Body Workout"
               time="Today, 2:30 PM"
@@ -164,14 +163,14 @@ interface ActivityItemProps {
 
 function ActivityItem({ title, time, calories, duration }: ActivityItemProps) {
   return (
-    <div className="flex items-center justify-between py-2 border-b border-border last:border-0">
+    <div className="flex items-center justify-between py-3 border-b border-border last:border-0 last:pb-0">
       <div>
         <p className="text-sm font-medium text-foreground">{title}</p>
-        <p className="text-xs text-muted-foreground">{time}</p>
+        <p className="text-xs text-muted-foreground mt-0.5">{time}</p>
       </div>
       <div className="text-right">
-        <p className="text-sm font-medium text-primary">{calories} kcal</p>
-        <p className="text-xs text-muted-foreground">{duration}</p>
+        <p className="text-sm font-semibold text-primary">{calories} kcal</p>
+        <p className="text-xs text-muted-foreground mt-0.5">{duration}</p>
       </div>
     </div>
   );
