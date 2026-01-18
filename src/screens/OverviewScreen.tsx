@@ -1,10 +1,9 @@
 /**
  * OverviewScreen Component
- * Dashboard showing user's fitness statistics and weekly progress
+ * Dashboard showing user's fitness statistics - matches Figma design exactly
  */
 
-import { Flame, Timer, Zap, TrendingUp } from "lucide-react";
-import { StatCard } from "@/components/stats/StatCard";
+import { Flame, Timer, Dumbbell, TrendingUp } from "lucide-react";
 import { WeeklyChart } from "@/components/stats/WeeklyChart";
 import { ProgressRing } from "@/components/stats/ProgressRing";
 
@@ -22,51 +21,81 @@ const weeklyData = [
 export function OverviewScreen() {
   return (
     <div className="min-h-screen bg-background pb-24">
-      {/* Header */}
-      <header className="px-4 pt-6 pb-4">
-        <p className="text-muted-foreground text-sm">Welcome back,</p>
-        <h1 className="text-2xl font-brand text-primary">Christian</h1>
+      {/* Header - matching Figma */}
+      <header className="px-4 pt-8 pb-6">
+        <p className="text-muted-foreground text-base">Hey,</p>
+        <h1 className="text-4xl font-brand text-primary tracking-wide">Christian</h1>
       </header>
 
       <main className="px-4 space-y-4">
-        {/* Quick Stats Grid */}
+        {/* Main Stats Grid - 2x2 layout matching Figma */}
         <div className="grid grid-cols-2 gap-3">
-          <StatCard
-            label="Today's Calories"
-            value="1,240"
-            unit="kcal"
-            icon={Flame}
-            highlight
-            trend="up"
-          />
-          <StatCard
-            label="Workout Time"
-            value="48"
-            unit="min"
-            icon={Timer}
-          />
-          <StatCard
-            label="Active Days"
-            value="5"
-            unit="/ 7"
-            icon={Zap}
-            trend="up"
-          />
-          <StatCard
-            label="Total Tonnage"
-            value="2.4"
-            unit="tonnes"
-            icon={TrendingUp}
-          />
+          {/* Today's Calories - Highlighted */}
+          <div className="stat-card-highlight">
+            <div className="flex items-start justify-between mb-2">
+              <span className="text-xs text-muted-foreground uppercase tracking-wide">
+                Today's Calories
+              </span>
+              <Flame className="w-4 h-4 text-primary" />
+            </div>
+            <div className="flex items-baseline gap-1">
+              <span className="text-3xl font-bold text-primary">1,240</span>
+              <span className="text-sm text-muted-foreground">kcal</span>
+            </div>
+            <div className="text-xs mt-2 text-success">↑ Improving</div>
+          </div>
+
+          {/* Workout Time */}
+          <div className="stat-card">
+            <div className="flex items-start justify-between mb-2">
+              <span className="text-xs text-muted-foreground uppercase tracking-wide">
+                Workout Time
+              </span>
+              <Timer className="w-4 h-4 text-muted-foreground" />
+            </div>
+            <div className="flex items-baseline gap-1">
+              <span className="text-3xl font-bold text-foreground">48</span>
+              <span className="text-sm text-muted-foreground">min</span>
+            </div>
+          </div>
+
+          {/* Active Days */}
+          <div className="stat-card">
+            <div className="flex items-start justify-between mb-2">
+              <span className="text-xs text-muted-foreground uppercase tracking-wide">
+                Active Days
+              </span>
+              <Dumbbell className="w-4 h-4 text-muted-foreground" />
+            </div>
+            <div className="flex items-baseline gap-1">
+              <span className="text-3xl font-bold text-foreground">5</span>
+              <span className="text-sm text-muted-foreground">/ 7</span>
+            </div>
+            <div className="text-xs mt-2 text-success">↑ Improving</div>
+          </div>
+
+          {/* Total Tonnage */}
+          <div className="stat-card">
+            <div className="flex items-start justify-between mb-2">
+              <span className="text-xs text-muted-foreground uppercase tracking-wide">
+                Total Tonnage
+              </span>
+              <TrendingUp className="w-4 h-4 text-muted-foreground" />
+            </div>
+            <div className="flex items-baseline gap-1">
+              <span className="text-3xl font-bold text-foreground">2.4</span>
+              <span className="text-sm text-muted-foreground">tonnes</span>
+            </div>
+          </div>
         </div>
 
-        {/* Weekly Progress */}
+        {/* Weekly Progress Chart */}
         <WeeklyChart
           data={weeklyData}
           label="Weekly Activity"
         />
 
-        {/* Goals Section */}
+        {/* Weekly Goals - Circular Progress */}
         <div className="stat-card">
           <h3 className="text-sm font-medium text-foreground mb-4">
             Weekly Goals

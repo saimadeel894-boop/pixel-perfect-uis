@@ -1,6 +1,6 @@
 /**
- * BottomNavigation Component (Updated for dark theme)
- * Fixed bottom navigation bar with 4 items and expandable FAB
+ * BottomNavigation Component
+ * Fixed bottom navigation bar with 4 items matching Figma design
  */
 
 import { Home, Users, Trophy, User } from "lucide-react";
@@ -25,8 +25,8 @@ export function BottomNavigation({
   onNavigate, 
 }: BottomNavigationProps) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-background border-t border-border safe-bottom z-30">
-      <div className="flex items-center justify-around px-4 py-2 max-w-lg mx-auto relative">
+    <nav className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-md border-t border-border safe-bottom z-30">
+      <div className="flex items-center justify-around px-2 py-2 max-w-lg mx-auto relative">
         {/* Left items */}
         {navItems.slice(0, 2).map((item) => (
           <NavButton 
@@ -38,7 +38,7 @@ export function BottomNavigation({
         ))}
         
         {/* Center FAB spacer */}
-        <div className="w-14" />
+        <div className="w-16" />
         
         {/* Right items */}
         {navItems.slice(2).map((item) => (
@@ -67,12 +67,22 @@ function NavButton({ label, icon: Icon, isActive, onClick }: NavButtonProps) {
     <button 
       onClick={onClick}
       className={cn(
-        "flex flex-col items-center gap-1 py-2 px-3 transition-colors",
-        isActive ? "text-nav-active" : "text-nav-inactive hover:text-foreground"
+        "flex flex-col items-center gap-0.5 py-1.5 px-2 min-w-[60px] transition-all duration-200",
+        isActive 
+          ? "text-primary" 
+          : "text-muted-foreground hover:text-foreground"
       )}
     >
-      <Icon className="w-5 h-5" />
-      <span className="text-[10px] font-medium tracking-wide">{label}</span>
+      <Icon className={cn(
+        "w-5 h-5 transition-transform duration-200",
+        isActive && "scale-110"
+      )} />
+      <span className={cn(
+        "text-[9px] font-medium tracking-wider",
+        isActive && "font-semibold"
+      )}>
+        {label}
+      </span>
     </button>
   );
 }
