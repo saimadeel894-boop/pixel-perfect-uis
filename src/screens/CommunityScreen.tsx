@@ -1,6 +1,6 @@
 /**
- * CommunityScreen Component (Updated for dark theme)
- * Main community feed with Overview and My Friends tabs
+ * CommunityScreen Component
+ * Main community feed with Overview and My Friends tabs - matches Figma design
  */
 
 import { useState } from "react";
@@ -61,11 +61,11 @@ export function CommunityScreen() {
   return (
     <div className="min-h-screen bg-background pb-24">
       {/* Header */}
-      <header className="sticky top-0 bg-background/95 backdrop-blur-sm z-40 px-4 pt-6 pb-4">
-        <div className="flex items-center justify-between mb-4">
-          <h1 className="text-3xl font-brand text-primary">Community</h1>
+      <header className="sticky top-0 bg-background/95 backdrop-blur-md z-40 px-4 pt-8 pb-4">
+        <div className="flex items-center justify-between mb-5">
+          <h1 className="text-4xl font-brand text-primary tracking-wide">Community</h1>
           <button 
-            className="p-2 hover:bg-muted rounded-full transition-colors"
+            className="p-2.5 hover:bg-muted rounded-full transition-colors"
             aria-label="Search"
           >
             <Search className="w-6 h-6 text-primary" />
@@ -73,7 +73,7 @@ export function CommunityScreen() {
         </div>
         
         {/* Tab Navigation */}
-        <div className="flex gap-2">
+        <div className="flex gap-3">
           <TabButton 
             label="Overview" 
             isActive={activeTab === "overview"} 
@@ -176,11 +176,11 @@ function FriendsTab() {
       
       {/* Following List */}
       <section className="mb-6">
-        <h2 className="text-sm font-medium text-foreground mb-2">
+        <h2 className="text-sm font-medium text-foreground mb-3">
           You follow these people:
         </h2>
         
-        <div className="divide-y divide-border">
+        <div className="divide-y divide-border rounded-xl overflow-hidden bg-background-card">
           {followingList.map((user) => (
             <FollowListItem
               key={user.id}
@@ -195,12 +195,14 @@ function FriendsTab() {
       
       {/* Followers Section */}
       <section>
-        <h2 className="text-sm font-medium text-foreground mb-2">
+        <h2 className="text-sm font-medium text-foreground mb-3">
           These people follow you:
         </h2>
-        <p className="text-center text-muted-foreground py-4">
-          No followers yet
-        </p>
+        <div className="rounded-xl bg-background-card p-6">
+          <p className="text-center text-muted-foreground">
+            No followers yet
+          </p>
+        </div>
       </section>
     </>
   );

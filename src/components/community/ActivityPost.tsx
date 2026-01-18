@@ -1,7 +1,6 @@
 /**
  * ActivityPost Component
- * Displays a user's fitness activity with stats
- * Shows tonnage, time, kcal with high-five and comment actions
+ * Displays a user's fitness activity with stats - matches Figma
  */
 
 import { MessageCircle } from "lucide-react";
@@ -39,28 +38,30 @@ export function ActivityPost({
       {/* Header */}
       <div className="flex items-center gap-3 mb-4">
         <Avatar initials={userInitials} size="lg" />
-        <div>
-          <p className="font-semibold text-foreground">{userName}</p>
-          <p className="text-sm text-muted-foreground">{timestamp}</p>
+        <div className="flex-1">
+          <p className="font-semibold text-foreground text-sm">{userName}</p>
+          <p className="text-xs text-muted-foreground">{timestamp}</p>
         </div>
       </div>
       
-      {/* Category */}
-      <p className="text-sm font-medium text-foreground mb-3">{category}</p>
+      {/* Category Badge */}
+      <div className="inline-flex px-3 py-1 bg-primary/20 rounded-full mb-4">
+        <span className="text-xs font-medium text-primary">{category}</span>
+      </div>
       
       {/* Stats Grid */}
       <div className="grid grid-cols-3 gap-4 mb-4">
-        <div>
+        <div className="text-center">
           <p className="text-xs text-muted-foreground mb-1">Tonnage</p>
-          <p className="text-lg font-bold text-foreground">{tonnage}</p>
+          <p className="text-base font-bold text-foreground">{tonnage}</p>
         </div>
-        <div>
+        <div className="text-center">
           <p className="text-xs text-muted-foreground mb-1">Time</p>
-          <p className="text-lg font-bold text-foreground">{time}</p>
+          <p className="text-base font-bold text-foreground">{time}</p>
         </div>
-        <div>
+        <div className="text-center">
           <p className="text-xs text-muted-foreground mb-1">Kcal</p>
-          <p className="text-lg font-bold text-foreground">{kcal}</p>
+          <p className="text-base font-bold text-foreground">{kcal}</p>
         </div>
       </div>
       
@@ -72,7 +73,7 @@ export function ActivityPost({
         >
           <HighFiveIcon className="w-5 h-5" />
           <span className="text-sm">High Five</span>
-          <span className="text-sm font-medium">{highFives}</span>
+          {highFives > 0 && <span className="text-sm font-medium">{highFives}</span>}
         </button>
         
         <button 
@@ -81,14 +82,13 @@ export function ActivityPost({
         >
           <MessageCircle className="w-5 h-5" />
           <span className="text-sm">Comment</span>
-          <span className="text-sm font-medium">{comments}</span>
+          {comments > 0 && <span className="text-sm font-medium">{comments}</span>}
         </button>
       </div>
     </div>
   );
 }
 
-// High Five icon (custom to match design)
 function HighFiveIcon({ className }: { className?: string }) {
   return (
     <svg 

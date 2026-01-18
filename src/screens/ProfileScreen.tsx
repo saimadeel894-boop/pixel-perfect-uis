@@ -1,6 +1,6 @@
 /**
  * ProfileScreen Component
- * User profile with stats and settings
+ * User profile with stats and settings - matches Figma
  */
 
 import { ProfileHeader } from "@/components/profile/ProfileHeader";
@@ -11,11 +11,11 @@ import {
   Bell, 
   Shield, 
   HelpCircle, 
-  LogOut, 
-  ChevronRight,
+  LogOut,
   Target,
   Award,
-  Calendar
+  Calendar,
+  ChevronRight
 } from "lucide-react";
 
 // Mock data
@@ -33,15 +33,15 @@ export function ProfileScreen() {
   return (
     <div className="min-h-screen bg-background pb-24">
       {/* Header */}
-      <header className="px-4 pt-6 pb-4">
-        <h1 className="text-3xl font-brand text-primary">Profile</h1>
+      <header className="px-4 pt-8 pb-6">
+        <h1 className="text-4xl font-brand text-primary tracking-wide">Profile</h1>
       </header>
       
       <main className="px-4 space-y-4">
         {/* Profile Header */}
         <ProfileHeader
           name="Christian Gadegaard"
-          username="christian_g"
+          username="@christian_g"
           initials="CG"
           followers={24}
           following={156}
@@ -68,7 +68,7 @@ export function ProfileScreen() {
           />
         </div>
 
-        {/* Workout Frequency */}
+        {/* Workout Frequency Chart */}
         <WeeklyChart
           data={weeklyWorkouts}
           maxValue={1}
@@ -122,9 +122,11 @@ interface QuickStatCardProps {
 
 function QuickStatCard({ icon: Icon, value, label }: QuickStatCardProps) {
   return (
-    <div className="stat-card flex flex-col items-center py-4">
-      <Icon className="w-5 h-5 text-primary mb-2" />
-      <p className="text-lg font-bold text-foreground">{value}</p>
+    <div className="stat-card flex flex-col items-center py-5">
+      <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center mb-2">
+        <Icon className="w-5 h-5 text-primary" />
+      </div>
+      <p className="text-xl font-bold text-foreground">{value}</p>
       <p className="text-xs text-muted-foreground">{label}</p>
     </div>
   );

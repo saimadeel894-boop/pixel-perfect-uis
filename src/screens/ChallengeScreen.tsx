@@ -1,12 +1,12 @@
 /**
  * ChallengeScreen Component
- * Shows active and available fitness challenges
+ * Shows active and available fitness challenges - matches Figma
  */
 
 import { useState } from "react";
 import { TabButton } from "@/components/community/TabButton";
 import { ChallengeCard } from "@/components/challenge/ChallengeCard";
-import { Trophy } from "lucide-react";
+import { Trophy, Plus } from "lucide-react";
 
 type Tab = "active" | "discover";
 
@@ -70,16 +70,18 @@ export function ChallengeScreen() {
   return (
     <div className="min-h-screen bg-background pb-24">
       {/* Header */}
-      <header className="sticky top-0 bg-background/95 backdrop-blur-sm z-40 px-4 pt-6 pb-4">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="p-2 bg-primary/20 rounded-lg">
-            <Trophy className="w-6 h-6 text-primary" />
+      <header className="sticky top-0 bg-background/95 backdrop-blur-md z-40 px-4 pt-8 pb-4">
+        <div className="flex items-center justify-between mb-5">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 bg-primary/20 rounded-xl">
+              <Trophy className="w-6 h-6 text-primary" />
+            </div>
+            <h1 className="text-4xl font-brand text-primary tracking-wide">Challenges</h1>
           </div>
-          <h1 className="text-3xl font-brand text-primary">Challenges</h1>
         </div>
         
         {/* Tab Navigation */}
-        <div className="flex gap-2">
+        <div className="flex gap-3">
           <TabButton 
             label="Active" 
             isActive={activeTab === "active"} 
@@ -118,11 +120,17 @@ function ActiveChallenges() {
           </div>
         ))
       ) : (
-        <div className="text-center py-12">
-          <Trophy className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-          <p className="text-muted-foreground">
-            No active challenges. Join one to get started!
+        <div className="text-center py-16">
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
+            <Trophy className="w-8 h-8 text-muted-foreground" />
+          </div>
+          <p className="text-muted-foreground mb-4">
+            No active challenges yet
           </p>
+          <button className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-full text-sm font-medium">
+            <Plus className="w-4 h-4" />
+            Join a Challenge
+          </button>
         </div>
       )}
     </div>
