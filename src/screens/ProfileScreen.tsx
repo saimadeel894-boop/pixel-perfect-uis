@@ -41,7 +41,7 @@ export function ProfileScreen() {
         {/* Profile Header */}
         <ProfileHeader
           name="Christian Gadegaard"
-          username="@christian_g"
+          username="christian_g"
           initials="CG"
           followers={24}
           following={156}
