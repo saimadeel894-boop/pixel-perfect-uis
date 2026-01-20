@@ -4,10 +4,17 @@ import { supabase } from '@/integrations/supabase/client';
 
 export type AppRole = 'admin' | 'coach' | 'client';
 
+interface Profile {
+  id: string;
+  full_name: string | null;
+  avatar_url: string | null;
+}
+
 interface AuthState {
   user: User | null;
   session: Session | null;
   role: AppRole | null;
+  profile: Profile | null;
   isLoading: boolean;
 }
 
@@ -16,6 +23,7 @@ export function useAuth() {
     user: null,
     session: null,
     role: null,
+    profile: null,
     isLoading: true,
   });
 
@@ -34,21 +42,39 @@ export function useAuth() {
     return data?.role as AppRole | null;
   }, []);
 
+  const fetchProfile = useCallback(async (userId: string): Promise<Profile | null> => {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('id, full_name, avatar_url')
+      .eq('id', userId)
+      .maybeSingle();
+
+    if (error) {
+      console.error('Error fetching profile:', error);
+      return null;
+    }
+
+    return data;
+  }, []);
+
   useEffect(() => {
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         const user = session?.user ?? null;
         let role: AppRole | null = null;
+        let profile: Profile | null = null;
 
         if (user) {
           // Use setTimeout to avoid potential deadlock with Supabase
           setTimeout(async () => {
             role = await fetchUserRole(user.id);
+            profile = await fetchProfile(user.id);
             setAuthState({
               user,
               session,
               role,
+              profile,
               isLoading: false,
             });
           }, 0);
@@ -57,6 +83,7 @@ export function useAuth() {
             user: null,
             session: null,
             role: null,
+            profile: null,
             isLoading: false,
           });
         }
@@ -67,15 +94,18 @@ export function useAuth() {
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       const user = session?.user ?? null;
       let role: AppRole | null = null;
+      let profile: Profile | null = null;
 
       if (user) {
         role = await fetchUserRole(user.id);
+        profile = await fetchProfile(user.id);
       }
 
       setAuthState({
         user,
         session,
         role,
+        profile,
         isLoading: false,
       });
     });
@@ -83,7 +113,7 @@ export function useAuth() {
     return () => {
       subscription.unsubscribe();
     };
-  }, [fetchUserRole]);
+  }, [fetchUserRole, fetchProfile]);
 
   const signUp = async (email: string, password: string, fullName: string) => {
     const { data, error } = await supabase.auth.signUp({

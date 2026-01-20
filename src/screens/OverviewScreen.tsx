@@ -19,15 +19,26 @@ const weeklyData = [
   { day: "Sun", value: 40 },
 ];
 
+import shreddedLogo from "@/assets/shredded-logo.png";
+
 export function OverviewScreen() {
   return (
     <div className="min-h-screen bg-background pb-28">
-      {/* Header - Greeting with user name */}
-      <header className="px-4 pt-10 pb-6 safe-top">
-        <p className="text-muted-foreground text-base mb-0.5">Hey,</p>
-        <h1 className="text-4xl font-brand text-primary tracking-wide">
-          Christian
-        </h1>
+      {/* Header - Greeting with user name and logo */}
+      <header className="px-4 pt-10 pb-6 safe-top flex items-center justify-between">
+        <div>
+          <p className="text-muted-foreground text-base mb-0.5">Hey,</p>
+          <h1 className="text-4xl font-brand text-primary tracking-wide">
+            Christian
+          </h1>
+        </div>
+        <div className="w-12 h-12">
+          <img 
+            src={shreddedLogo} 
+            alt="Shredded" 
+            className="w-full h-full object-contain"
+          />
+        </div>
       </header>
 
       <main className="px-4 space-y-4">

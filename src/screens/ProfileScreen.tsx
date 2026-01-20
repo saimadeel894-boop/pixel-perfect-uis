@@ -3,6 +3,8 @@
  * User profile with stats and settings - matches Figma
  */
 
+import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "@/contexts/AuthContext";
 import { ProfileHeader } from "@/components/profile/ProfileHeader";
 import { SettingsItem } from "@/components/profile/SettingsItem";
 import { WeeklyChart } from "@/components/stats/WeeklyChart";
@@ -17,6 +19,7 @@ import {
   Calendar,
   ChevronRight
 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 // Mock data
 const weeklyWorkouts = [
@@ -30,6 +33,35 @@ const weeklyWorkouts = [
 ];
 
 export function ProfileScreen() {
+  const navigate = useNavigate();
+  const { signOut, user, profile } = useAuthContext();
+  const { toast } = useToast();
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      toast({
+        title: "Logged out",
+        description: "You have been successfully logged out.",
+      });
+      navigate("/login");
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to log out. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const displayName = profile?.full_name || user?.email?.split('@')[0] || "User";
+  const initials = displayName
+    .split(' ')
+    .map(n => n[0])
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
+
   return (
     <div className="min-h-screen bg-background pb-24">
       {/* Header */}
@@ -40,9 +72,9 @@ export function ProfileScreen() {
       <main className="px-4 space-y-4">
         {/* Profile Header */}
         <ProfileHeader
-          name="Christian Gadegaard"
-          username="christian_g"
-          initials="CG"
+          name={displayName}
+          username={user?.email?.split('@')[0] || "user"}
+          initials={initials}
           followers={24}
           following={156}
           workouts={342}
@@ -106,7 +138,7 @@ export function ProfileScreen() {
             icon={LogOut}
             label="Log Out"
             destructive
-            onClick={() => console.log("Logout")}
+            onClick={handleLogout}
           />
         </div>
       </main>

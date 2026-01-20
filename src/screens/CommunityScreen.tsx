@@ -24,27 +24,49 @@ const suggestions = [
 const activities = [
   {
     id: 1,
-    userInitials: "CG",
-    userName: "Christian Gadegaard",
-    timestamp: "Feb 10, 19:49",
-    category: "Fitness",
-    tonnage: "11.2 tonnes",
-    time: "21:06",
-    kcal: "119",
-    highFives: 0,
-    comments: 0,
+    userInitials: "MK",
+    userName: "Makise Kurisu",
+    timestamp: "3m ago",
+    content: "Hey Sandow Fam! 👋 Just crushed my morning workout - a killer HIIT session to kickstart the day! 🔥 Feeling the burn in the best way possible. 💪🔥",
+    hashtags: ["HIITWorkout", "HealthyEating"],
+    images: [
+      "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&h=300&fit=crop",
+    ],
+    likes: 5874,
+    comments: 11,
+    isVerified: true,
+    isOwner: true,
   },
   {
     id: 2,
-    userInitials: "CG",
-    userName: "Christian Gadegaard",
-    timestamp: "Jan 28, 19:51",
-    category: "Fitness",
-    tonnage: "8.5 tonnes",
-    time: "18:32",
-    kcal: "95",
-    highFives: 3,
-    comments: 1,
+    userInitials: "MK",
+    userName: "Makise Kurisu",
+    timestamp: "3m ago",
+    content: "Morning vibes! Just completed a refreshing yoga session to start the day on a positive note. 🧘 How do you like to kick off your mornings?",
+    hashtags: ["YogaLove", "WellnessWednesday"],
+    likes: 5874,
+    comments: 11,
+    isVerified: true,
+  },
+  {
+    id: 3,
+    userInitials: "MK",
+    userName: "Makise Kurisu",
+    timestamp: "3m ago",
+    content: "Tried a new protein smoothie recipe post-workout, and it's a game-changer. What's your favorite protein-packed snack? 🍌",
+    hashtags: ["HealthySnacking", "ProteinPower"],
+    poll: {
+      question: "Favorite Fitness Snacks?",
+      options: [
+        { label: "Protein Smoothie", percentage: 3 },
+        { label: "Greek Yogurt", percentage: 10 },
+        { label: "Almond Butter", percentage: 84, isSelected: true },
+      ],
+    },
+    likes: 5874,
+    comments: 11,
+    isVerified: true,
   },
 ];
 
@@ -99,8 +121,17 @@ export function CommunityScreen() {
 }
 
 function OverviewTab() {
+  const [filter, setFilter] = useState<"all" | "posts" | "videos">("all");
+  
   return (
     <>
+      {/* Content Filter Tabs */}
+      <div className="flex items-center gap-2 mb-4">
+        <FilterTab label="All" isActive={filter === "all"} onClick={() => setFilter("all")} />
+        <FilterTab label="Posts" isActive={filter === "posts"} onClick={() => setFilter("posts")} />
+        <FilterTab label="Videos" isActive={filter === "videos"} onClick={() => setFilter("videos")} />
+      </div>
+
       {/* Story Input */}
       <div className="mb-6">
         <StoryInput 
@@ -137,8 +168,10 @@ function OverviewTab() {
             <ActivityPost
               key={activity.id}
               {...activity}
-              onHighFive={() => console.log("High five", activity.id)}
+              onLike={() => console.log("Like", activity.id)}
               onComment={() => console.log("Comment", activity.id)}
+              onEdit={() => console.log("Edit", activity.id)}
+              onDelete={() => console.log("Delete", activity.id)}
             />
           ))
         ) : (
@@ -148,6 +181,27 @@ function OverviewTab() {
         )}
       </section>
     </>
+  );
+}
+
+interface FilterTabProps {
+  label: string;
+  isActive: boolean;
+  onClick: () => void;
+}
+
+function FilterTab({ label, isActive, onClick }: FilterTabProps) {
+  return (
+    <button
+      onClick={onClick}
+      className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+        isActive 
+          ? "bg-foreground text-background" 
+          : "bg-muted text-muted-foreground hover:text-foreground"
+      }`}
+    >
+      {label}
+    </button>
   );
 }
 

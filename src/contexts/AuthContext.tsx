@@ -4,10 +4,17 @@ import { User, Session } from '@supabase/supabase-js';
 
 export type { AppRole };
 
+interface Profile {
+  id: string;
+  full_name: string | null;
+  avatar_url: string | null;
+}
+
 interface AuthContextType {
   user: User | null;
   session: Session | null;
   role: AppRole | null;
+  profile: Profile | null;
   isLoading: boolean;
   signUp: (email: string, password: string, fullName: string) => Promise<{ data: any; error: any }>;
   signIn: (email: string, password: string) => Promise<{ data: any; error: any }>;

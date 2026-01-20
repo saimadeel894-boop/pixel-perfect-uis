@@ -1,11 +1,11 @@
 /**
  * ExpandableFAB Component
  * Floating action button that expands into a circular menu
- * Shows: Education, Trackers, Q&A, Mindset options - matches Figma exactly
+ * Shows: Education, Trackers, Q&A, Mindset, Notes options - matches Figma exactly
  */
 
 import { useState } from "react";
-import { Plus, X } from "lucide-react";
+import { Plus, X, BookOpen, BarChart3, MessageCircle, Brain, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // Import images
@@ -17,14 +17,17 @@ import emojiImg from "@/assets/emoji-icon.png";
 interface FABMenuItem {
   id: string;
   label: string;
-  image: string;
+  image?: string;
+  icon?: React.ElementType;
 }
 
+// Menu items arranged in a circular pattern matching Figma
 const menuItems: FABMenuItem[] = [
-  { id: "education", label: "Education", image: educationImg },
-  { id: "trackers", label: "Trackers", image: trackersImg },
-  { id: "qa", label: "Q&A", image: emojiImg },
-  { id: "mindset", label: "Mindset", image: mindsetImg },
+  { id: "education", label: "Education", icon: BookOpen },
+  { id: "trackers", label: "Trackers", icon: BarChart3 },
+  { id: "qa", label: "Q&A", icon: MessageCircle },
+  { id: "mindset", label: "Mindset", icon: Brain },
+  { id: "notes", label: "Notes", icon: FileText },
 ];
 
 interface ExpandableFABProps {
@@ -41,13 +44,15 @@ export function ExpandableFAB({ onItemClick }: ExpandableFABProps) {
     setIsExpanded(false);
   };
 
-  // Position items in a cross pattern around the FAB
+  // Position items in a circular pattern around the FAB (matching Figma)
   const getItemPosition = (index: number) => {
+    // Circular arrangement: top, top-right, top-left, bottom-right, bottom-left
     const positions = [
-      { x: 0, y: -85 },    // top
-      { x: 75, y: -40 },   // top-right
-      { x: -75, y: -40 },  // top-left
-      { x: 0, y: 50 },     // bottom (slightly hidden by nav)
+      { x: 0, y: -90 },     // top (12 o'clock)
+      { x: 75, y: -55 },    // top-right
+      { x: -75, y: -55 },   // top-left
+      { x: 55, y: 25 },     // bottom-right
+      { x: -55, y: 25 },    // bottom-left
     ];
     return positions[index] || { x: 0, y: 0 };
   };
@@ -72,7 +77,7 @@ export function ExpandableFAB({ onItemClick }: ExpandableFABProps) {
               key={item.id}
               onClick={() => handleItemClick(item.id)}
               className={cn(
-                "absolute flex flex-col items-center gap-1 transition-all duration-300",
+                "absolute flex flex-col items-center gap-1.5 transition-all duration-300",
                 isExpanded
                   ? "opacity-100 scale-100"
                   : "opacity-0 scale-0 pointer-events-none"
@@ -84,16 +89,12 @@ export function ExpandableFAB({ onItemClick }: ExpandableFABProps) {
                 transitionDelay: isExpanded ? `${index * 50}ms` : "0ms",
               }}
             >
-              {/* Circular image */}
-              <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white/20 shadow-lg">
-                <img
-                  src={item.image}
-                  alt={item.label}
-                  className="w-full h-full object-cover"
-                />
+              {/* Circular icon button - white background with orange icon */}
+              <div className="w-12 h-12 rounded-full bg-white/95 flex items-center justify-center shadow-lg">
+                {item.icon && <item.icon className="w-5 h-5 text-primary" strokeWidth={2} />}
               </div>
               {/* Label */}
-              <span className="text-white text-xs font-medium drop-shadow-lg">
+              <span className="text-white text-[10px] font-medium drop-shadow-lg">
                 {item.label}
               </span>
             </button>
