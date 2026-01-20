@@ -1,24 +1,37 @@
 import { ReactNode } from 'react';
+import shreddedLogo from '@/assets/shredded-logo.png';
 
 interface AuthLayoutProps {
   children: ReactNode;
+  showLogo?: boolean;
 }
 
-export function AuthLayout({ children }: AuthLayoutProps) {
+export function AuthLayout({ children, showLogo = true }: AuthLayoutProps) {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Brand header */}
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
         <div className="w-full max-w-sm space-y-8">
           {/* Logo */}
-          <div className="text-center space-y-2">
-            <h1 className="font-brand text-5xl text-primary tracking-wide">
-              TRONEX
-            </h1>
-            <p className="text-muted-foreground text-sm">
-              Your fitness journey starts here
-            </p>
-          </div>
+          {showLogo && (
+            <div className="text-center space-y-4">
+              <div className="mx-auto w-24 h-24">
+                <img 
+                  src={shreddedLogo} 
+                  alt="Shredded" 
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div>
+                <h1 className="font-brand text-4xl text-primary tracking-wide">
+                  SHREDDED
+                </h1>
+                <p className="text-muted-foreground text-sm mt-1">
+                  Your fitness journey starts here
+                </p>
+              </div>
+            </div>
+          )}
           
           {children}
         </div>
@@ -27,7 +40,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
       {/* Footer */}
       <div className="py-6 text-center">
         <p className="text-muted-foreground text-xs">
-          © 2024 Tronex Fitness. All rights reserved.
+          © 2024 Shredded Fitness. All rights reserved.
         </p>
       </div>
     </div>
